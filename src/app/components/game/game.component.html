@@ -1,0 +1,5 @@
+<input type="number" (blur)="n = $event.target.value" />
+<button (click)="randomise()">Randomise</button>
+<section *ngFor="let item  of numberToArray(n)">
+  <app-tile *ngFor="let i of numberToArray(n)"></app-tile>
+</section>

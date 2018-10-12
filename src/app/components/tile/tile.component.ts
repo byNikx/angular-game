@@ -6,8 +6,9 @@ import {
   ElementRef,
   Output,
   EventEmitter,
-  InjectionToken
+  Input,
 } from '@angular/core';
+import { TileStyleClass, TileStatus } from '../../game/game.constants';
 
 @Component({
   selector: 'app-tile',
@@ -18,18 +19,29 @@ export class TileComponent implements OnInit {
 
   @Output('active') active: EventEmitter<any> = new EventEmitter<any>(null);
   @Output('deactive') deactive: EventEmitter<any> = new EventEmitter<any>(null);
-  _id: InjectionToken<TileComponent> = new InjectionToken<TileComponent>('TileComponent');
+
+  /**
+   * Refernce to countdown timer
+   */
+  private _timer: any;
+
+  private _countdown: number;
+  @Input('countdown') set countdown(time: number) {
+    this._countdown = time;
+  }
+  get countdown(): number {
+    return this._countdown * 1000;
+  }
 
   /**
    * Event listener co capture the click event on the tile
    * @param tile
    */
   @HostListener('click', ['$event.target']) handleClick(tile: TileComponent): void {
-    console.log(tile);
 
     if (this.isActive()) {
       this.deactivate();
-      this.startCountDown(2000);
+      this.startCountDown(this.countdown);
     }
   }
 
@@ -44,17 +56,20 @@ export class TileComponent implements OnInit {
 
   /**
    * Activates the tile
+   * @returns void
    */
   public activate(): void {
-    this.renderer.addClass(this.tileRef.nativeElement, 'active');
+    this.renderer.addClass(this.tileRef.nativeElement, TileStyleClass.Active);
+    this.deactive.emit(TileStatus.Active);
   }
 
   /**
    * Deactivates the tile
+   * @returns void
    */
   public deactivate(): void {
-    this.renderer.removeClass(this.tileRef.nativeElement, 'active');
-    this.deactive.emit();
+    this.renderer.removeClass(this.tileRef.nativeElement, TileStyleClass.Active);
+    this.deactive.emit(TileStatus.Deactive);
   }
 
   /**
@@ -62,17 +77,26 @@ export class TileComponent implements OnInit {
    * @returns boolean
    */
   public isActive(): boolean {
-    return this.tileRef.nativeElement.className.split(' ').indexOf('active') > -1;
+    return this.tileRef.nativeElement.className.split(' ').indexOf(TileStyleClass.Active) > -1;
   }
 
   /**
    * Set up the timer to activate the tile
    * @param timer
+   * @returns void
    */
   private startCountDown(timer: number): void {
-    setTimeout(() => {
+    this._timer = setTimeout(() => {
       this.activate();
     }, timer);
+  }
+
+  /**
+   * Set up the timer to activate the tile
+   * @returns void
+   */
+  public stopCountDown(): void {
+    clearTimeout(this._timer);
   }
 
 }

@@ -1,5 +1,8 @@
-<input type="number" (blur)="n = $event.target.value" />
+<input type="number" (input)="n = $event.target.value" [value]="n" placeholder="Enter size of grid..." />
+<input type="number" (input)="y = $event.target.value" [value]="y" placeholder="Number of columns to be colored..." />
+<input type="number" (input)="z = $event.target.value" [value]="z" placeholder="Enter time..." />
 <button (click)="randomise()">Randomise</button>
 <section *ngFor="let item  of numberToArray(n)">
-  <app-tile *ngFor="let i of numberToArray(n)"></app-tile>
+  <app-tile *ngFor="let i of numberToArray(n)" [countdown]="z"></app-tile>
 </section>
+<h2>Empty all the yellow boxes by clicking on them!</h2>

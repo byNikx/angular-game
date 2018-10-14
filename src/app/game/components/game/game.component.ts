@@ -169,7 +169,7 @@ export class GameComponent implements OnInit, AfterViewInit {
    * @returns void
    */
   private declareWinner(): void {
-    alert('You are fast!! you won.');
+    alert('You are fast!! you win.');
     this.restart();
   }
 

@@ -150,7 +150,7 @@ export class GameComponent implements OnInit, AfterViewInit {
   }
 
   private declareLoser(): void {
-    alert('Oppss. you lose.\n try again?')
+    alert('Oppss. you lose.\nPlease try again.')
     this.restart();
   }
 

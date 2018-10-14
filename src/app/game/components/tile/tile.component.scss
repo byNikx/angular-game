@@ -1,14 +1,54 @@
 :host{
-    background-color: rgba(0,0,0,.1);
-    height: 50px;
-    width: 50px;
+    background-color: #D9A869;
+    height: 70px;
+    width: 70px;
     display: inline-block;
-    transition: 300ms ease-out;
+    
+    // Tile State styling
+    transition: 300ms background-image ease-out;
 
-    // Tile States styling
     &.active{
+        -webkit-animation: slide-in-bottom 0.5s ease-in-out both;
+        animation: slide-in-bottom 0.5s ease-in-out both;
         cursor: pointer;
-        background-color: yellow;
-        box-shadow: 0px 0px 2px rgba(0,0,4,1);
+        background-image: url('../../../../assets/diglett.png');
+        background-size: contain;
+        background-repeat: no-repeat;
     }
+
+
+@keyframes animatedBackground {
+    from { background-position: 0 0; }
+    to { background-position: 100% 0; }
+}
+
+/**
+ * animation slide-in-bottom
+ */
+ @-webkit-keyframes slide-in-bottom {
+    0% {
+      -webkit-transform: translateY(1000px);
+              transform: translateY(1000px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  @keyframes slide-in-bottom {
+    0% {
+      -webkit-transform: translateY(1000px);
+              transform: translateY(1000px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  
 }

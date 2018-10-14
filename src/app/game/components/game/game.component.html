@@ -1,15 +1,15 @@
-<label for="n">N: </label>
-<input id="n" type="number" min="1" max="100" [(ngModel)]="n" placeholder="Enter size of grid..." />
+<form #form="ngForm" (ngSubmit)="onSubmit(form)" ngNativeValidate>
+  <label for="n">N: </label>
+  <input id="n" type="number" min="1" max="1999" required [ngModel]="n" name="n" />
 
-<label for="y">Y: </label>
-<input id="y" type="number" [(ngModel)]="y" placeholder="Number of columns to be colored..." />
+  <label for="y">Y: </label>
+  <input id="y" type="number" min="1" max="3999999" [ngModel]="y" name="y" required />
 
-<label for="z">Z: </label>
-<input id="z" type="number" [(ngModel)]="z" placeholder="Enter time..." />
-<button (click)="restart()">Restart</button>
-
-
-<h2>Empty all the yellow boxes by clicking on them!</h2>
+  <label for="z">Z: </label>
+  <input id="z" type="number" min="1" max="4" [ngModel]="z" name="z" required /><br /><br />
+  <button type="submit">Restart</button>
+</form>
+<h2>Hit them all!!, if you can :D</h2>
 <table>
   <tr *ngFor="let item  of numberToArray(matrixSize)">
     <td *ngFor="let i of numberToArray(matrixSize)">

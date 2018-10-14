@@ -1,26 +1,29 @@
 :host{
     display: block;
     text-align: center;
+    
 
-    .overlay{
-        position: absolute; 
-        top:0; 
-        right: 0; 
-        bottom: 0; 
-        left:0; 
-        background-color: rgba(0,0,0,.1); 
-        z-index: 1;
-        transition: .8s;
-        display: none;
+    input[type=number]{
+        padding: .2rem;
+        border: 2px solid brown;
+    }
+
+    button{
+        font-weight: 700;
+        padding: .4rem 1.4rem; background-color: #D9A869;
+        border: 2px solid brown;
     }
 
     table{
+        overflow: hidden;
         border-collapse: collapse;
+        background-color: #D9A869;
         margin: auto;
+        border: 5px solid brown;
+        background-clip: border-box;
         tr{
             td{
-                border: 1px solid green;
-                border: none;
+                overflow: hidden;
             }
         }
     }

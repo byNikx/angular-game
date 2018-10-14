@@ -10,6 +10,7 @@ import {
 
 import { TileComponent } from '../tile/tile.component';
 import { GameState, TileState } from '../../game.constants';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-game',
@@ -22,12 +23,12 @@ export class GameComponent implements OnInit, AfterViewInit {
   private _activeTiles: TileComponent[];
 
   // Placeholder for matrix size (n)
-  private matrixSize: number;
+  public matrixSize: number;
 
   /**
    * Count for row and columns
    */
-  private _n = 10;
+  private _n = 7;
   @Input('n') set n(n: number) {
     this._n = n;
   }
@@ -50,7 +51,7 @@ export class GameComponent implements OnInit, AfterViewInit {
   /**
    * Time to reactivate the tile in seconds
    */
-  private _z = 5;
+  private _z = 4;
   @Input('z') set z(z: number) {
     this._z = z;
   }
@@ -79,6 +80,17 @@ export class GameComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.randomise();
+  }
+
+  public onSubmit(form: NgForm) {
+    const config = form.value;
+    console.log(form.valid);
+    if (form.valid) {
+      this.n = config.n;
+      this.y = config.y;
+      this.z = config.z;
+      this.restart();
+    }
   }
 
   /**
@@ -111,6 +123,10 @@ export class GameComponent implements OnInit, AfterViewInit {
     return Array.from({ length: count }, () => '');
   }
 
+  /**
+   * Handles state change event of active tiles
+   * @param state
+   */
   public onStateChange(state: TileState): void {
 
     if (state === TileState.Deactive) {
@@ -140,20 +156,36 @@ export class GameComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * Fetches current state of the game
+   * @returns GameState
+   */
   private getState(): GameState {
     return this.gameStatus.state;
   }
 
+  /**
+   * Handles winner declaration
+   * @returns void
+   */
   private declareWinner(): void {
-    alert('Yeah!! you won.');
+    alert('You are fast!! you won.');
     this.restart();
   }
 
+  /**
+   * Handles loser declaration
+   * @returns void
+   */
   private declareLoser(): void {
     alert('Oppss. you lose.\nPlease try again.')
     this.restart();
   }
 
+  /**
+   * Ends the current game
+   * @returns void
+   */
   private finish(): void {
     this._activeTiles.forEach((tile: TileComponent) => {
       tile.stopCountDown();
@@ -161,6 +193,10 @@ export class GameComponent implements OnInit, AfterViewInit {
     this.gameStatus.state = GameState.End;
   }
 
+  /**
+   * Restarts the game
+   * @returns void
+   */
   private restart(): void {
     this.matrixSize = this.n;
     this.gameStatus = {

@@ -7,9 +7,8 @@
 
   <label for="z">Z: </label>
   <input id="z" type="number" min="1" max="4" [ngModel]="z" name="z" required /><br /><br />
-  <button type="submit">Restart</button>
+  <button type="submit" [disabled]="!form.valid">Start</button>
 </form>
-<h2>Hit them all!!, if you can :D</h2>
 <table>
   <tr *ngFor="let item  of numberToArray(matrixSize)">
     <td *ngFor="let i of numberToArray(matrixSize)">

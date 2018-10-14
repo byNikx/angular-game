@@ -28,7 +28,7 @@ export class GameComponent implements OnInit, AfterViewInit {
   /**
    * Count for row and columns
    */
-  private _n = 7;
+  private _n: number;
   @Input('n') set n(n: number) {
     this._n = n;
   }
@@ -39,7 +39,7 @@ export class GameComponent implements OnInit, AfterViewInit {
   /**
    * Count of active tiles
    */
-  private _y = 10;
+  private _y: number;
   @Input('y') set y(y: number) {
     this._y = y;
     this.gameStatus.activeTiles = y;
@@ -51,7 +51,7 @@ export class GameComponent implements OnInit, AfterViewInit {
   /**
    * Time to reactivate the tile in seconds
    */
-  private _z = 4;
+  private _z: number;
   @Input('z') set z(z: number) {
     this._z = z;
   }

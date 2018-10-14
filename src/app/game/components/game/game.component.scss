@@ -12,6 +12,10 @@
         font-weight: 700;
         padding: .4rem 1.4rem; background-color: #D9A869;
         border: 2px solid brown;
+
+        &:disabled{
+            opacity: .6;
+        }
     }
 
     table{

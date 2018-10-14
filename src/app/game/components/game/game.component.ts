@@ -145,7 +145,7 @@ export class GameComponent implements OnInit, AfterViewInit {
   }
 
   private declareWinner(): void {
-    alert('Yea!! you won.\n wanna play again?');
+    alert('Yeah!! you won.');
     this.restart();
   }
 

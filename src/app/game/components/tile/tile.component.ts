@@ -8,7 +8,7 @@ import {
   EventEmitter,
   Input,
 } from '@angular/core';
-import { TileStyleClass, TileStatus } from '../../game/game.constants';
+import { TileStyleClass, TileState } from '../../game.constants';
 
 @Component({
   selector: 'app-tile',
@@ -17,8 +17,7 @@ import { TileStyleClass, TileStatus } from '../../game/game.constants';
 })
 export class TileComponent implements OnInit {
 
-  @Output('active') active: EventEmitter<any> = new EventEmitter<any>(null);
-  @Output('deactive') deactive: EventEmitter<any> = new EventEmitter<any>(null);
+  @Output('stateChange') stateChange: EventEmitter<TileState> = new EventEmitter<TileState>();
 
   /**
    * Refernce to countdown timer
@@ -40,8 +39,8 @@ export class TileComponent implements OnInit {
   @HostListener('click', ['$event.target']) handleClick(tile: TileComponent): void {
 
     if (this.isActive()) {
-      this.deactivate();
       this.startCountDown(this.countdown);
+      this.deactivate();
     }
   }
 
@@ -59,8 +58,8 @@ export class TileComponent implements OnInit {
    * @returns void
    */
   public activate(): void {
-    this.renderer.addClass(this.tileRef.nativeElement, TileStyleClass.Active);
-    this.deactive.emit(TileStatus.Active);
+    this.highlight();
+    this.stateChange.emit(TileState.Active);
   }
 
   /**
@@ -69,7 +68,16 @@ export class TileComponent implements OnInit {
    */
   public deactivate(): void {
     this.renderer.removeClass(this.tileRef.nativeElement, TileStyleClass.Active);
-    this.deactive.emit(TileStatus.Deactive);
+    this.stateChange.emit(TileState.Deactive);
+  }
+
+  public highlight(): void {
+    this.renderer.addClass(this.tileRef.nativeElement, TileStyleClass.Active);
+  }
+
+  public reset(): void {
+    this.renderer.removeAttribute(this.tileRef.nativeElement, 'class');
+    this.stopCountDown();
   }
 
   /**
@@ -77,7 +85,9 @@ export class TileComponent implements OnInit {
    * @returns boolean
    */
   public isActive(): boolean {
-    return this.tileRef.nativeElement.className.split(' ').indexOf(TileStyleClass.Active) > -1;
+    return this.tileRef.
+      nativeElement.className.split(' ')
+      .indexOf(TileStyleClass.Active) > -1;
   }
 
   /**
@@ -96,7 +106,9 @@ export class TileComponent implements OnInit {
    * @returns void
    */
   public stopCountDown(): void {
-    clearTimeout(this._timer);
+    if (this._timer) {
+      clearTimeout(this._timer);
+    }
   }
 
 }

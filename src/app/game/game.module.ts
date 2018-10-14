@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TileComponent } from '../components/tile/tile.component';
-import { GameComponent } from '../components/game/game.component';
+import { FormsModule } from '@angular/forms';
+
+import { TileComponent } from './components/tile/tile.component';
+import { GameComponent } from './components/game/game.component';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   declarations: [
     TileComponent,

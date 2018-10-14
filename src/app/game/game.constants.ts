@@ -1,13 +1,16 @@
-enum GameStatus {
+enum GameState {
     Pristine,
+    Dirty,
     Win,
     Lose,
     End
 }
 
-enum TileStatus {
+enum TileState {
+    Pristine,
     Active,
-    Deactive
+    Deactive,
+    Dirty
 }
 
 enum TileStyleClass {
@@ -16,8 +19,8 @@ enum TileStyleClass {
 }
 
 export {
-    GameStatus,
-    TileStatus,
+    GameState,
+    TileState,
     TileStyleClass
 };
 
